@@ -43,7 +43,7 @@ def sms():
 
         elif message == 'stop':
             subscriber = Subscriber.Query.get(objectId="rpokyVL5eH")
-            print subscriber_exist
+            print subscriber_exist[0]
             print subscriber
             reply = 'You\'ve unsubscribed.'
 
