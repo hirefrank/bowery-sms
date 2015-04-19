@@ -23,7 +23,11 @@ def hello_world():
 def sms():
     resp = twilio.twiml.Response()
     if request.method == 'POST':
-        if request.form['Body'].strip().lower() == 'subscribe':
+        message = request.form['Body'].strip().lower()
+
+        switch(message) {
+          case subscribe:
+          case start:
             phone = request.form['From']
             user_exist = User.Query.all().filter(phone=phone).limit(1)
             if not user_exist:
@@ -31,6 +35,10 @@ def sms():
                 resp.message('You are now subscribed. Reply "STOP" to stop receiving updates.')
             else:
                 resp.message('You already subscribed!')
-        else:
-            resp.message('Wha? Text "Help" to see a list of commannds.')
+            break
+          default:
+            resp.message('Welcome to Bowery SMS. Text "Subscribe" receive daily workouts.')
+          break
+        }
         return str(resp)
+

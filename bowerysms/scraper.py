@@ -144,6 +144,6 @@ if __name__ == '__main__':
                 condensed = condensed_content(raw)
                 save_workout(slug, raw, condensed)
             else:
-                break
+                break;
 
 
