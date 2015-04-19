@@ -42,15 +42,15 @@ def sms():
                 reply = 'You already subscribed!'
 
         elif message == 'stop':
-            subscriber = Subscriber.Query.get(objectId="rpokyVL5eH")
-            print subscriber_exist[0]
-            print subscriber
+            #subscriber = Subscriber.Query.get(objectId="rpokyVL5eH")
+            subscriber = subscriber_exist[0]
+            subscriber.delete()
             reply = 'You\'ve unsubscribed.'
 
         print 'From: ', phone
         print 'Message: ', message
         print 'Response: ', reply
 
-        #resp = twilio.twiml.Response()
-        #resp.message(reply)
-        #return str(resp)
+        resp = twilio.twiml.Response()
+        resp.message(reply)
+        return str(resp)
