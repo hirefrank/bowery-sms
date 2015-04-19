@@ -45,9 +45,8 @@ def sms():
             s = list(subscriber_exist)
             s_object = s[0]
             print s_object
-            #subscriber = Subscriber.Query.get(objectId=subscriber_exist)
-            #subscriber = subscriber_exist[0]
-            #subscriber.delete()
+            subscriber = Subscriber.Query.get(objectId=s_object)
+            subscriber.delete()
             reply = 'You\'ve unsubscribed.'
 
         print 'From: ', phone
