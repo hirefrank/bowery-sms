@@ -36,3 +36,5 @@ def sms():
         else:
             resp.message('Welcome to Bowery SMS. Text "Subscribe" receive daily workouts.')
         return str(resp)
+    else:
+        return ''
