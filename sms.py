@@ -11,11 +11,18 @@ from twilio import twiml
 from flask import Flask
 app = Flask(__name__)
 
-@app.route("/sms")
+@app.route('/')
+def hello_world():
+    return 'Hello World!'
+
+@app.route('/sms')
 def sms():
-    resp = twiml.Response()
-    print resp
+    #print TWILIO['ACCOUNT']
+    #return TWILIO['TOKEN']
+    #client = TwilioRestClient(, TWILIO['TOKEN'])
+    #return client
+    #resp = twiml.Response()
+    #return resp
 
 if __name__ == '__main__':
-    client = TwilioRestClient(TWILIO['ACCOUNT'], TWILIO['TOKEN'])
     app.run()
