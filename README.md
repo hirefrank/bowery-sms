@@ -1,4 +1,4 @@
-# Bowery SMS
+## Bowery SMS
 
 Receive the [Bowery CrossFit](http://www.bowerycrossfit.com) workout as a SMS everyday!
 
