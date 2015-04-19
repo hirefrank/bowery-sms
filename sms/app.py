@@ -22,19 +22,21 @@ def hello_world():
 @app.route("/sms", methods=['GET', 'POST'])
 def sms():
     if request.method == 'POST':
+        # default reply
+        reply = 'Welcome to Bowery SMS. Text "Subscribe" to receive daily workouts.'
+
         resp = twilio.twiml.Response()
         message = request.form['Body'].strip().lower()
-
         if request.form['Body'].strip().lower() == 'subscribe':
             phone = request.form['From']
             user_exist = User.Query.all().filter(phone=phone).limit(1)
             if len(user_exist) == 0:
-                resp.message('You already subscribed!')
-            else:
                 u = User.signup(phone,"",phone=phone)
-                resp.message('You are now subscribed. Reply "STOP" to stop receiving updates.')
-        else:
-            resp.message('Welcome to Bowery SMS. Text "Subscribe" to receive daily workouts.')
+                reply = 'You are now subscribed. Reply "STOP" to stop receiving updates.'
+            else:
+                reply = 'You already subscribed!'
+
+        resp.message(reply)
         return str(resp)
     else:
         return ''
