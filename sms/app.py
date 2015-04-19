@@ -44,8 +44,6 @@ def sms():
         elif message == 'stop':
             s = list(subscriber_exist)
             subscriber = s[0]
-            #subscriber = Subscriber.Query.get(objectId="rmPnqL47em")
-            #print subscriber
             subscriber.delete()
             reply = 'You\'ve unsubscribed.'
 
@@ -53,7 +51,6 @@ def sms():
         print 'Message: ', message
         print 'Response: ', reply
 
-        return reply
-        #resp = twilio.twiml.Response()
-        #resp.message(reply)
-        #return str(resp)
+        resp = twilio.twiml.Response()
+        resp.message(reply)
+        return str(resp)
