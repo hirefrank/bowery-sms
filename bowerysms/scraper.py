@@ -125,6 +125,10 @@ def condensed_content(content):
     return content.strip()
 
 def save_workout(slug, raw, condensed):
+    print "Slug: ", slug
+    print "Raw: ", raw
+    print "condensed: ", condensed
+    print "***********************"
     workout = Workout(slug=slug, raw=raw, condensed=condensed)
     return workout.save()
 
