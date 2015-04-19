@@ -32,38 +32,21 @@ def sms():
         print 'From: ', phone
         print 'Message: ', message
 
-        user_exist = User.Query.all().filter(phone=phone).limit(1)
-        print user_exist
-        print user_exist.count()
+        if message == 'subscribe':
+            user_exist = User.Query.all().filter(phone=phone).limit(1)
+            if user_exist.count() == 0:
+                u = User.signup(phone,"",phone=phone)
+                print 'User: ', u
+                reply = 'You are now subscribed. Reply "Stop" to stop receiving updates.'
+            else:
+                reply = 'You already subscribed!'
 
-        #if message == 'subscribe':
-            #try:
-            #    u = User.signup(phone,"",phone=phone)
-            #user_exist = User.Query.all().filter(phone=phone).limit(1)
-            #print len(user_exist)
-            #if phone in users:
-            #    print "blah"
-            #else:
-            #    print "boo"
+        elif message == 'stop':
+            #u = User.login(phone, "")
+            #u.delete()
+            reply = 'You\'ve unsubscribed.'
 
-
-            #numbers =
-            #if(numbers.indexOf(phone) !== -1) {
-            #user_exist = User.Query.all().filter(phone=phone).limit(1)
-            #try:
-            #    user_exist = User.Query.all().filter(phone=phone).limit(1)
-            #print user_exist
-            #if user_exist[0]:
-            #   print "empty"
-            #else:
-            #    print "not empty"
-            #if len(user_exist) == 0:
-            #    u = User.signup(phone,"",phone=phone)
-            #    reply = 'You are now subscribed. Reply "Stop" to stop receiving updates.'
-            #else:
-            #    reply = 'You already subscribed!'
-
-        return ''
+        print 'Response: ', reply
         #resp = twilio.twiml.Response()
         #resp.message(reply)
         #return str(resp)
