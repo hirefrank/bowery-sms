@@ -62,6 +62,7 @@ def sms():
             #else:
             #    reply = 'You already subscribed!'
 
-        resp = twilio.twiml.Response()
-        resp.message(reply)
-        return str(resp)
+        return ''
+        #resp = twilio.twiml.Response()
+        #resp.message(reply)
+        #return str(resp)
