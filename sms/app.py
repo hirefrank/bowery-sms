@@ -10,11 +10,15 @@ import sys
 import twilio.twiml
 
 from parse_rest.connection import register
-from parse_rest.user import User
+from parse_rest.datatypes import Object
+#from parse_rest.user import User
 register(PARSE['APPLICATION_ID'], PARSE['REST_API_KEY'])
 
 from flask import Flask, request, redirect
 app = Flask(__name__)
+
+class Subscriber(Object):
+    pass
 
 @app.route('/')
 def hello_world():
@@ -30,15 +34,19 @@ def sms():
         phone = request.form['From']
 
         if message == 'subscribe':
-            user_exist = User.Query.all().filter(phone=phone).limit(1)
-            if user_exist.count() == 0:
-                u = User.signup(phone, None,phone=phone)
+            subscriber_exist = Subscriber.Query.all().filter(phone=phone).limit(1)
+            #user_exist = User.Query.all().filter(phone=phone).limit(1)
+            if subscriber_exist.count() == 0:
+            #if user_exist.count() == 0:
+                subscriber = Subscriber(phone=phone)
+                subscriber.save()
+                #u = User.signup(phone, None,phone=phone)
                 reply = 'You are now subscribed. Reply "Stop" to stop receiving updates.'
             else:
                 reply = 'You already subscribed!'
 
         elif message == 'stop':
-            u = User.login(phone, None).delete()
+            #u = User.login(phone, None).delete()
             reply = 'You\'ve unsubscribed.'
 
         print 'From: ', phone
