@@ -34,6 +34,7 @@ def sms():
 
         user_exist = User.Query.all().filter(phone=phone).limit(1)
         print user_exist
+        print user_exist.count()
 
         #if message == 'subscribe':
             #try:
