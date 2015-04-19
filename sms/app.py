@@ -44,7 +44,7 @@ def sms():
         elif message == 'stop':
             u = User.login(phone, "")
             print 'User: ', u
-            #u.delete()
+            u.delete()
             reply = 'You\'ve unsubscribed.'
 
         print 'Response: ', reply
