@@ -42,7 +42,8 @@ def sms():
                 reply = 'You already subscribed!'
 
         elif message == 'stop':
-            print subscriber_exist[0]
+            #subscriber = Subscriber.Query.get(objectId="xxwXx9eOec")
+            print subscriber_exist
             reply = 'You\'ve unsubscribed.'
 
         print 'From: ', phone
