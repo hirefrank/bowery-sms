@@ -125,11 +125,9 @@ def condensed_content(content):
     return content.strip()
 
 def save_workout(slug, raw, condensed):
-    print '***********************'
     print 'Slug: ', slug
     print 'Raw: ', raw
     print 'Condensed: ', condensed
-    print '***********************'
     workout = Workout(slug=slug, raw=raw, condensed=condensed)
     return workout.save()
 
@@ -149,8 +147,6 @@ if __name__ == '__main__':
                 condensed = condensed_content(raw)
                 save_workout(slug, raw, condensed)
             else:
-                print '***********************'
                 print 'No new workouts.'
-                print '***********************'
 
 
