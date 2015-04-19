@@ -25,9 +25,7 @@ def sms():
     if request.method == 'POST':
         message = request.form['Body'].strip().lower()
 
-        switch(message) {
-          case subscribe:
-          case start:
+        if request.form['Body'].strip().lower() == 'subscribe':
             phone = request.form['From']
             user_exist = User.Query.all().filter(phone=phone).limit(1)
             if not user_exist:
@@ -35,10 +33,7 @@ def sms():
                 resp.message('You are now subscribed. Reply "STOP" to stop receiving updates.')
             else:
                 resp.message('You already subscribed!')
-            break
-          default:
+        else:
             resp.message('Welcome to Bowery SMS. Text "Subscribe" receive daily workouts.')
-          break
-        }
         return str(resp)
 
