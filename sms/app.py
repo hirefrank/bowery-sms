@@ -43,11 +43,10 @@ def sms():
 
         elif message == 'stop':
             s = list(subscriber_exist)
-            s_object = s[0]
-            print s_object
-            subscriber = Subscriber.Query.get(objectId="rmPnqL47em")
-            print subscriber
-            #subscriber.delete()
+            subscriber = s[0]
+            #subscriber = Subscriber.Query.get(objectId="rmPnqL47em")
+            #print subscriber
+            subscriber.delete()
             reply = 'You\'ve unsubscribed.'
 
         print 'From: ', phone
