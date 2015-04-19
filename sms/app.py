@@ -33,14 +33,15 @@ def sms():
 
         if message == 'subscribe':
             user_exist = User.Query.all().filter(phone=phone).limit(1)
-            print 'Does user exist? ', user_exist
-            print len(user_exist)
+            print 'Does user exist? ', user_exist[0]
+            print 'Length? ', len(user_exist)
             #if len(user_exist) == 0:
             #    u = User.signup(phone,"",phone=phone)
             #    reply = 'You are now subscribed. Reply "Stop" to stop receiving updates.'
             #else:
             #    reply = 'You already subscribed!'
 
+        print '***********************'
         resp = twilio.twiml.Response()
         resp.message(reply)
         return str(resp)
