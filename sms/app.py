@@ -24,18 +24,23 @@ def sms():
     if request.method == 'POST':
         # default reply
         reply = 'Welcome to Bowery SMS. Text "Subscribe" to receive daily workouts.'
-
-        resp = twilio.twiml.Response()
         message = request.form['Body'].strip().lower()
-        if request.form['Body'].strip().lower() == 'subscribe':
-            phone = request.form['From']
+        phone = request.form['From']
+
+        if message == 'subscribe':
             user_exist = User.Query.all().filter(phone=phone).limit(1)
             if len(user_exist) == 0:
                 u = User.signup(phone,"",phone=phone)
-                reply = 'You are now subscribed. Reply "STOP" to stop receiving updates.'
+                reply = 'You are now subscribed. Reply "Stop" to stop receiving updates.'
             else:
                 reply = 'You already subscribed!'
 
+        elif message == 'stop':
+            u = User.login(phone, "")
+            u.delete()
+            reply = 'You\'ve unsubscribed.'
+
+        resp = twilio.twiml.Response()
         resp.message(reply)
         return str(resp)
     else:
