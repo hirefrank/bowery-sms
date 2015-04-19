@@ -6,6 +6,7 @@ try:
 except ImportError as e:
     from settings import *
 
+import sys
 import twilio.twiml
 
 from parse_rest.connection import register
@@ -26,6 +27,9 @@ def sms():
         reply = 'Welcome to Bowery SMS. Text "Subscribe" to receive daily workouts.'
         message = request.form['Body'].strip().lower()
         phone = request.form['From']
+
+        print message
+        print phone
 
         resp = twilio.twiml.Response()
         resp.message(reply)
