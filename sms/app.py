@@ -28,20 +28,40 @@ def sms():
         message = request.form['Body'].strip().lower()
         phone = request.form['From']
 
+        print '***********************'
         print 'From: ', phone
         print 'Message: ', message
 
-        if message == 'subscribe':
-            user_exist = User.Query.all().filter(phone=phone).limit(1)
-            print 'Does user exist? ', user_exist[0]
-            print 'Length? ', len(user_exist)
+        user_exist = User.Query.all().filter(phone=phone).limit(1)
+        print len(user_exist)
+
+        #if message == 'subscribe':
+            #try:
+            #    u = User.signup(phone,"",phone=phone)
+            #user_exist = User.Query.all().filter(phone=phone).limit(1)
+            #print len(user_exist)
+            #if phone in users:
+            #    print "blah"
+            #else:
+            #    print "boo"
+
+
+            #numbers =
+            #if(numbers.indexOf(phone) !== -1) {
+            #user_exist = User.Query.all().filter(phone=phone).limit(1)
+            #try:
+            #    user_exist = User.Query.all().filter(phone=phone).limit(1)
+            #print user_exist
+            #if user_exist[0]:
+            #   print "empty"
+            #else:
+            #    print "not empty"
             #if len(user_exist) == 0:
             #    u = User.signup(phone,"",phone=phone)
             #    reply = 'You are now subscribed. Reply "Stop" to stop receiving updates.'
             #else:
             #    reply = 'You already subscribed!'
 
-        print '***********************'
         resp = twilio.twiml.Response()
         resp.message(reply)
         return str(resp)
