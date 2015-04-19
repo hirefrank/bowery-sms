@@ -21,8 +21,8 @@ def hello_world():
 
 @app.route("/sms", methods=['GET', 'POST'])
 def sms():
-    resp = twilio.twiml.Response()
     if request.method == 'POST':
+        resp = twilio.twiml.Response()
         message = request.form['Body'].strip().lower()
 
         if request.form['Body'].strip().lower() == 'subscribe':
@@ -36,4 +36,3 @@ def sms():
         else:
             resp.message('Welcome to Bowery SMS. Text "Subscribe" receive daily workouts.')
         return str(resp)
-
