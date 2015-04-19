@@ -42,8 +42,8 @@ def sms():
                 reply = 'You already subscribed!'
 
         elif message == 'stop':
-            #subscriber = Subscriber.Query.get(objectId="rpokyVL5eH")
-            subscriber = subscriber_exist[0]
+            subscriber = Subscriber.Query.get(objectId="rpokyVL5eH")
+            #subscriber = subscriber_exist[0]
             subscriber.delete()
             reply = 'You\'ve unsubscribed.'
 
