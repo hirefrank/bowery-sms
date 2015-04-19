@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+# Scrape the daily workouts from Bowery CrossFit blog's sitemap.
+URL = 'http://www.bowerycrossfit.com/post-sitemap.xml'
+
 try:
     from settings_local import *
 except ImportError as e:
@@ -16,8 +19,7 @@ from HTMLParser import HTMLParser
 from parse_rest.connection import register
 from parse_rest.datatypes import Object
 
-URL = 'http://www.bowerycrossfit.com/post-sitemap.xml'
-
+# Common abbreviations to help reduce the text message length.
 abbreviations = {
     'minutes': 'min',
     'seconds': 'sec',
@@ -64,7 +66,7 @@ abbreviations = {
     }
 
 # This is ugly. I should do this better.
-# Maybe actually learn about encoding?
+# Todo: Actually learn about encoding.
 special_chars = {
     '’': "'",
     '‘': "'",
@@ -133,16 +135,29 @@ def save_workout(slug, raw, condensed):
 
 if __name__ == '__main__':
     register(PARSE['APPLICATION_ID'], PARSE['REST_API_KEY'])
+
+    # Get most recent blog programming posts
     blog_posts = get_programming_urls()
 
+    # For each blog post...
     for post in blog_posts:
         response = requests.get(post)
         soup = bs4.BeautifulSoup(response.text)
+
+        # Get content for each post
         content = str(soup.select('div.single-post-content')).strip('[]')
+
+        # If the post contains a WOD
         if has_wod(content):
+
+            # Get slug from the URL
             slug = post.replace("http://www.bowerycrossfit.com/programming-", "").strip("/")
+
+            # Does the slug already exist?
             slug_exist = Workout.Query.all().filter(slug=slug).limit(1)
+
             if slug_exist.count() == 0:
+                # If not, save the workout
                 raw = clean_content(content)
                 condensed = condensed_content(raw)
                 save_workout(slug, raw, condensed)
