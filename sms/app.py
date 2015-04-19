@@ -11,7 +11,6 @@ import twilio.twiml
 
 from parse_rest.connection import register
 from parse_rest.datatypes import Object
-#from parse_rest.user import User
 register(PARSE['APPLICATION_ID'], PARSE['REST_API_KEY'])
 
 from flask import Flask, request, redirect
@@ -43,7 +42,7 @@ def sms():
                 reply = 'You already subscribed!'
 
         elif message == 'stop':
-            subscriber_exist.delete()
+            subscriber_exist[0].delete()
             reply = 'You\'ve unsubscribed.'
 
         print 'From: ', phone
