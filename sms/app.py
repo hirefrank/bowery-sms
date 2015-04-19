@@ -42,7 +42,7 @@ def sms():
                 reply = 'You already subscribed!'
 
         elif message == 'stop':
-            subscriber_exist[0].delete()
+            print subscriber_exist[0]
             reply = 'You\'ve unsubscribed.'
 
         print 'From: ', phone
