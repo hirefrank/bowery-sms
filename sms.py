@@ -17,6 +17,7 @@ def hello_world():
 
 @app.route('/sms')
 def sms():
+    return 'Hello!'
     #print TWILIO['ACCOUNT']
     #return TWILIO['TOKEN']
     #client = TwilioRestClient(, TWILIO['TOKEN'])
