@@ -12,6 +12,7 @@ import re
 import unicodedata
 
 from HTMLParser import HTMLParser
+
 from parse_rest.connection import register
 from parse_rest.datatypes import Object
 
@@ -137,10 +138,12 @@ if __name__ == '__main__':
         content = str(soup.select('div.single-post-content')).strip('[]')
         if has_wod(content):
             slug = post.replace("http://www.bowerycrossfit.com/programming-", "").strip("/")
-            last_post = Workout.Query.all().order_by("createdAt").limit(1)
-            if len(last_post) == 0 or last_post[0].slug != slug:
+            slug_exist = Workout.Query.all().filter(slug=slug).limit(1)
+            if not slug_exist:
                 raw = clean_content(content)
                 condensed = condensed_content(raw)
                 save_workout(slug, raw, condensed)
             else:
                 break
+
+

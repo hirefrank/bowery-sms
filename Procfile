@@ -1,1 +1,1 @@
-web: gunicorn sms:app --log-file=-
+web: gunicorn app:app --log-file=-
