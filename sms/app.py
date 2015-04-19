@@ -32,21 +32,18 @@ def sms():
 
         message = request.form['Body'].strip().lower()
         phone = request.form['From']
+        subscriber_exist = Subscriber.Query.all().filter(phone=phone).limit(1)
 
         if message == 'subscribe':
-            subscriber_exist = Subscriber.Query.all().filter(phone=phone).limit(1)
-            #user_exist = User.Query.all().filter(phone=phone).limit(1)
             if subscriber_exist.count() == 0:
-            #if user_exist.count() == 0:
                 subscriber = Subscriber(phone=phone)
                 subscriber.save()
-                #u = User.signup(phone, None,phone=phone)
                 reply = 'You are now subscribed. Reply "Stop" to stop receiving updates.'
             else:
                 reply = 'You already subscribed!'
 
         elif message == 'stop':
-            #u = User.login(phone, None).delete()
+            subscriber.delete()
             reply = 'You\'ve unsubscribed.'
 
         print 'From: ', phone
