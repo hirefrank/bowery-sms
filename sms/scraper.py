@@ -143,7 +143,7 @@ if __name__ == '__main__':
         if has_wod(content):
             slug = post.replace("http://www.bowerycrossfit.com/programming-", "").strip("/")
             slug_exist = Workout.Query.all().filter(slug=slug).limit(1)
-            if not slug_exist:
+            if len(slug_exist) > 0:
                 raw = clean_content(content)
                 condensed = condensed_content(raw)
                 save_workout(slug, raw, condensed)

@@ -28,13 +28,13 @@ def sms():
         if request.form['Body'].strip().lower() == 'subscribe':
             phone = request.form['From']
             user_exist = User.Query.all().filter(phone=phone).limit(1)
-            if not user_exist:
+            if len(user_exist) == 0:
+                resp.message('You already subscribed!')
+            else:
                 u = User.signup(phone,"",phone=phone)
                 resp.message('You are now subscribed. Reply "STOP" to stop receiving updates.')
-            else:
-                resp.message('You already subscribed!')
         else:
-            resp.message('Welcome to Bowery SMS. Text "Subscribe" receive daily workouts.')
+            resp.message('Welcome to Bowery SMS. Text "Subscribe" to receive daily workouts.')
         return str(resp)
     else:
         return ''
