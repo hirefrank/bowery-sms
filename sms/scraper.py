@@ -152,7 +152,7 @@ def save_workout(slug, raw, condensed):
     print 'Open: ', open_workout
     print 'Experienced: ', experienced_workout
 
-    workout = Workout(slug=slug, raw=raw, condensed=condensed, sent=False)
+    workout = Workout(slug=slug, raw=raw, open=open_workout, experienced=experienced_workout, sent=False)
     return workout.save()
 
 if __name__ == '__main__':
