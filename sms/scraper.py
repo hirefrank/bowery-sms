@@ -96,9 +96,15 @@ def strip_tags(html):
 def get_programming_urls():
     response = requests.get(URL)
     soup = bs4.BeautifulSoup(response.text)
+
+    # reverse to get the most recent urls first
     urls = list(reversed([url.text for url in soup.findAll("loc")]))
+
+    # limit to last 5 urls
     del urls[5:]
-    return urls
+
+    # reverse on return to process in asc order
+    return reversed(urls)
 
 def has_wod(content):
     if "Workout:" in content and not "open gym" in content:
@@ -107,8 +113,10 @@ def has_wod(content):
         return False
 
 def clean_content(content):
-    clean = re.sub('Recommended content:.*?Workout:','', strip_tags(content.replace("</p>", "</p> ")), flags=re.DOTALL)
-    clean = clean.replace("Workout:", "")
+    if "Open Workout:" in content:
+        clean = re.sub('Recommended content:.*?Open Workout:','', strip_tags(content.replace("</p>", "</p> ")), flags=re.DOTALL)
+    else:
+        clean = re.sub('Recommended content:.*?Workout:','', strip_tags(content.replace("</p>", "</p> ")), flags=re.DOTALL)
     return clean
 
 def condensed_content(content):
@@ -129,7 +137,21 @@ def condensed_content(content):
 def save_workout(slug, raw, condensed):
     print 'Slug: ', slug
     print 'Raw: ', raw
-    print 'Condensed: ', condensed
+
+    # split the workout for open and experiencd tracks
+    workouts = condensed.split("Experienced Workout:")
+
+    # default to same workout for both tracks
+    open_workout = workouts[0]
+    experienced_workout = workouts[0]
+
+    # if len == 2, there is an experienced track; assign
+    if len(workouts) == 2:
+        experienced = workouts[1].replace("Experienced Workout:\n", "")
+
+    print 'Open: ', open_workout
+    print 'Experienced: ', experienced_workout
+
     workout = Workout(slug=slug, raw=raw, condensed=condensed, sent=False)
     return workout.save()
 
