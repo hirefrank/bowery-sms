@@ -47,12 +47,12 @@ def sms():
         if user_exist.count() == 0:
             random_pwd = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(20))
             new_user = User.signup(phone, random_pwd, phone=phone, admin=False, subscriber=False)
-            u = new_user
+            u = new_user[0]
         else:
-            u = list(user_exist)
+            user_object = list(user_exist)
+            u = user_object[0]
 
-        print 'user_exist: ', user_exist
-        print 'user object: ', u[0]
+        print 'user object: ', u
 
         if message == 'subscribe':
             # Has the user subscribed?
