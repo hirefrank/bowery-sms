@@ -43,6 +43,7 @@ abbreviations = {
     'overhead squat': 'OHS',
     'power clean': 'PC',
     'push press': 'PP',
+    'push-press': 'PP',
     'push jerk': 'PJ',
     'power snatch': 'PSN',
     'squat clean': 'SC',
@@ -84,6 +85,7 @@ headers = {
     'Experienced Level:': 'Open Level:',
     'Experienced/Open': None,
     'Workout:': None,
+    #':': None, # catchall sort of hacky
     }
 
 class Workout(Object):
@@ -111,7 +113,7 @@ def get_programming_urls():
     urls = list(reversed([url.text for url in soup.findAll("loc")]))
 
     # limit to last 5 urls
-    del urls[15:]
+    del urls[5:]
 
     # reverse on return to process in asc order
     return reversed(urls)
@@ -124,14 +126,19 @@ def has_wod(content):
 
 def clean_content(content):
     # loop through each possible header
+    match = False
     for key in headers:
         if key in content:
+            match = True
             # if testing week
             if 'Testing week!' in content:
                 clean = re.sub('Testing week!.*?' + key,'', strip_tags(content.replace("</p>", "</p> ")), flags=re.DOTALL)
             else:
                 clean = re.sub('Recommended content:.*?' + key,'', strip_tags(content.replace("</p>", "</p> ")), flags=re.DOTALL)
             break
+
+    if match == False:
+        clean = re.sub('Recommended content:.*?:','', strip_tags(content.replace("</p>", "</p> ")), flags=re.DOTALL)
 
     return clean
 
