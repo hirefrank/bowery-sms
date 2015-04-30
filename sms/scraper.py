@@ -25,7 +25,9 @@ abbreviations = {
     'seconds': 'sec',
     'meters': 'm',
     'Chest-to-Bar': 'CTB',
+    'Chest to Bar': 'CTB',
     'Pull-Ups': 'PU',
+    'Pull Ups': 'PU',
     'as many rounds and reps as possible': 'AMRAP',
     'as many rounds as possible': 'AMRAP',
     'as many reps as possible': 'AMRAP',
@@ -76,6 +78,14 @@ special_chars = {
     '\xc2\xa0' : ' ',
     }
 
+# Possible headers
+headers = {
+    'Open Workout:': 'Experienced Workout:',
+    'Experienced Level:': 'Open Level:',
+    'Experienced/Open': None,
+    'Workout:': None,
+    }
+
 class Workout(Object):
     pass
 
@@ -101,22 +111,28 @@ def get_programming_urls():
     urls = list(reversed([url.text for url in soup.findAll("loc")]))
 
     # limit to last 5 urls
-    del urls[5:]
+    del urls[15:]
 
     # reverse on return to process in asc order
     return reversed(urls)
 
 def has_wod(content):
-    if "Workout:" in content and not "open gym" in content:
+    if not "Open gym" in content:
         return True
     else:
         return False
 
 def clean_content(content):
-    if "Open Workout:" in content:
-        clean = re.sub('Recommended content:.*?Open Workout:','', strip_tags(content.replace("</p>", "</p> ")), flags=re.DOTALL)
-    else:
-        clean = re.sub('Recommended content:.*?Workout:','', strip_tags(content.replace("</p>", "</p> ")), flags=re.DOTALL)
+    # loop through each possible header
+    for key in headers:
+        if key in content:
+            # if testing week
+            if 'Testing week!' in content:
+                clean = re.sub('Testing week!.*?' + key,'', strip_tags(content.replace("</p>", "</p> ")), flags=re.DOTALL)
+            else:
+                clean = re.sub('Recommended content:.*?' + key,'', strip_tags(content.replace("</p>", "</p> ")), flags=re.DOTALL)
+            break
+
     return clean
 
 def condensed_content(content):
@@ -135,19 +151,36 @@ def condensed_content(content):
     return content.strip()
 
 def save_workout(slug, raw, condensed):
+    workout = {}
+    workouts = []
     print 'Slug: ', slug
     print 'Raw: ', raw
+    print 'Condensed: ', condensed
 
     # split the workout for open and experiencd tracks
-    workouts = condensed.split("Experienced Workout:")
+    for key in headers:
+        if headers[key] is not None and headers[key] in condensed:
+            workouts = condensed.split(headers[key])
+            dict_key = headers[key].split(" ")[0].lower()
+            other_dict_key = 'experienced' if dict_key == 'open' else 'open'
 
-    # default to same workout for both tracks
-    open_workout = workouts[0]
-    experienced_workout = workouts[0]
+            workout[dict_key] = workouts[1].replace(headers[key] + "\n", "")
+            workout[other_dict_key] = workouts[0].replace(key + " \n", "")
+            break
 
-    # if len == 2, there is an experienced track; assign
-    if len(workouts) == 2:
-        experienced = workouts[1].replace("Experienced Workout:\n", "")
+        # not split workouts
+        elif key in condensed:
+            workout['open'] = condensed.replace(key, "")
+            workout['experienced'] = condensed.replace(key, "")
+            break
+
+    # if split, set variables
+    if len(workout) == 2:
+        open_workout = workout['open']
+        experienced_workout = workout['experienced']
+    else:
+        open_workout = condensed
+        experienced_workout = condensed
 
     print 'Open: ', open_workout
     print 'Experienced: ', experienced_workout
@@ -164,10 +197,15 @@ if __name__ == '__main__':
     # For each blog post...
     for post in blog_posts:
         response = requests.get(post)
-        soup = bs4.BeautifulSoup(response.text)
+        text = response.text
+
+        soup = bs4.BeautifulSoup(text.replace('<div class="col-right"></p>', '<div class="col-right">'))
 
         # Get content for each post
-        content = str(soup.select('div.single-post-content')).strip('[]')
+        content = str(soup.select('div.col-right')).strip('[]')
+
+        if content == "":
+            content = str(soup.select('div.single-post-content')).strip('[]')
 
         # If the post contains a WOD
         if has_wod(content):
@@ -185,5 +223,6 @@ if __name__ == '__main__':
                 save_workout(slug, raw, condensed)
             else:
                 print 'No new workouts.'
+
 
 
