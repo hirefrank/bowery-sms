@@ -53,6 +53,7 @@ def sms():
             u = user_object[0]
 
         print 'user object: ', u
+        print 'u sub: ', u.subscriber
 
         if message == 'subscribe':
             # Has the user subscribed?
