@@ -8,18 +8,15 @@ except ImportError as e:
 
 import sys
 import twilio.twiml
-import string
-import random
 
 from parse_rest.connection import register
-from parse_rest.datatypes import Object
-from parse_rest.user import User
-register(PARSE['APPLICATION_ID'], PARSE['REST_API_KEY'])
+from parse_rest.datatypes import Object, ACL
+register(PARSE['APPLICATION_ID'], PARSE['REST_API_KEY'], master_key=PARSE['MASTER_KEY'])
 
 from flask import Flask, request, redirect
 app = Flask(__name__)
 
-class Subscriber(Object):
+class SMSUser(Object):
     pass
 
 @app.route('/')
@@ -42,23 +39,20 @@ def sms():
         phone = request.form['From']
 
         # Does user exist?
-        user_exist = User.Query.all().filter(phone=phone).limit(1)
+        user_exist = SMSUser.Query.all().filter(phone=phone).limit(1)
 
         if user_exist.count() == 0:
-            random_pwd = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(20))
-            new_user = User.signup(phone, random_pwd, phone=phone, admin=False, subscriber=False)
+            new_user = SMSUser(phone=phone, admin=False, active=False, ACL=ACL({}))
+            new_user.save()
             u = new_user[0]
         else:
             user_object = list(user_exist)
             u = user_object[0]
 
-        print 'user object: ', u
-        print 'u sub: ', u.subscriber
-
         if message == 'subscribe':
             # Has the user subscribed?
-            if u.subscriber is not True:
-                u.subscriber = True
+            if u.active is False:
+                u.active = True
                 u.save()
                 reply = 'You are now subscribed. Reply "Stop" to stop receiving updates.'
             else:
@@ -67,8 +61,8 @@ def sms():
 
         elif message == 'stop':
             # Is the user subscribed?
-            if u.subscriber is True:
-                u.subscriber = False
+            if u.active is True:
+                u.active = False
                 u.save()
                 reply = 'You\'ve unsubscribed.'
             else:

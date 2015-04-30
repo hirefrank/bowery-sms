@@ -17,7 +17,7 @@ import unicodedata
 from HTMLParser import HTMLParser
 
 from parse_rest.connection import register
-from parse_rest.datatypes import Object
+from parse_rest.datatypes import Object, ACL
 
 # Common abbreviations to help reduce the text message length.
 abbreviations = {
@@ -185,11 +185,12 @@ def save_workout(slug, raw, condensed):
     print 'Open: ', open_workout
     print 'Experienced: ', experienced_workout
 
-    workout = Workout(slug=slug, raw=raw, open=open_workout, experienced=experienced_workout, sent=False)
+    workout = Workout(slug=slug, raw=raw, open=open_workout, experienced=experienced_workout, sent=False, ACL=ACL({}))
+    workout.ACL.set_default(read=True)
     return workout.save()
 
 if __name__ == '__main__':
-    register(PARSE['APPLICATION_ID'], PARSE['REST_API_KEY'])
+    register(PARSE['APPLICATION_ID'], PARSE['REST_API_KEY'], master_key=PARSE['MASTER_KEY'])
 
     # Get most recent blog programming posts
     blog_posts = get_programming_urls()
