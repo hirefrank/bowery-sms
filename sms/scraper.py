@@ -186,7 +186,6 @@ def save_workout(slug, raw, condensed):
     print 'Experienced: ', experienced_workout
 
     workout = Workout(slug=slug, raw=raw, open=open_workout, experienced=experienced_workout, sent=False, ACL=ACL({}))
-    workout.ACL.set_default(read=True)
     return workout.save()
 
 if __name__ == '__main__':
