@@ -8,9 +8,12 @@ except ImportError as e:
 
 import sys
 import twilio.twiml
+import string
+import random
 
 from parse_rest.connection import register
 from parse_rest.datatypes import Object
+from parse_rest.user import User
 register(PARSE['APPLICATION_ID'], PARSE['REST_API_KEY'])
 
 from flask import Flask, request, redirect
@@ -28,35 +31,44 @@ def hello_world():
 def sms():
     # Only continue if a POST request
     if request.method == 'POST':
+
         # Default reply message
         reply = 'Welcome to Bowery SMS. Text "Subscribe" to receive daily workouts.'
 
         # Remove whitespace, lowecase the inbound message
         message = request.form['Body'].strip().lower()
+
         # Sender's phone number. Save for later.
         phone = request.form['From']
-        # Is the user a subscriber?
-        subscriber_exist = Subscriber.Query.all().filter(phone=phone).limit(1)
+
+        # Does user exist?
+        user_exist = User.Query.all().filter(phone=phone).limit(1)
+
+        if user_exist.count() == 0:
+            random_pwd = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(20))
+            new_user = User.signup(phone, random_pwd, phone=phone, admin=False, subscriber=False)
+            u = new_user
+        else:
+            u = list(user_exist)
 
         if message == 'subscribe':
-            # If not, subscribe them
-            if subscriber_exist.count() == 0:
-                subscriber = Subscriber(phone=phone)
-                subscriber.save()
+            # Has the user subscribed?
+            if u.subscriber is not True:
+                u.subscriber = True
+                u.save()
                 reply = 'You are now subscribed. Reply "Stop" to stop receiving updates.'
             else:
                 # They already exist
                 reply = 'You already subscribed!'
 
-        # Todo: shouldn't work if the user hasn't subscribed
         elif message == 'stop':
-            # Get subscriber object
-            s = list(subscriber_exist)
-            subscriber = s[0]
-
-            # Unsubscribe
-            subscriber.delete()
-            reply = 'You\'ve unsubscribed.'
+            # Is the user subscribed?
+            if u.subscriber is True:
+                u.subscriber = False
+                u.save()
+                reply = 'You\'ve unsubscribed.'
+            else:
+                reply = 'You haven\'t subscribed.'
 
         print 'From: ', phone
         print 'Message: ', message
