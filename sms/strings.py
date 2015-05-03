@@ -72,14 +72,18 @@ headers = {
 # List of positive reinforcement salutations
 salutations = [
     'Nice work!',
+    'Boom!',
+    'Not too shabby!'
     ]
 
 # List of available commands
 commands = {
-    'Subscribe': 'Receive the day\'s workout every morning.',
-    'Stop': 'Stop receiving the day\'s workout every morning.',
-    'WOD': 'Receive the day\'s workout.',
+    'Subscribe': 'Receive the daily workout every morning.',
+    'Stop': 'Stop receiving the daily workout every morning.',
+    'WOD': 'Get today\'s workout.',
     '+ [result]': 'Log your result from today\'s workout. e.g. "+ 4 rounds"',
     '[activity]: [result]': 'Log a PR for a movement or activity. e.g. "Clean 1RM: 135lbs"',
-    '? [activity]': 'Search your history for a given activity or movement. e.g. "Clean 1RM"',
+    '? [activity]': 'Search your PRs for an activity or movement. e.g. "Clean 1RM"',
+    'Tip: [your feedback]': 'Send feedback on how to make the app better.',
     }
+
