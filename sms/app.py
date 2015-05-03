@@ -9,7 +9,6 @@ except ImportError as e:
 import sys
 import twilio.twiml
 import random
-import sendgrid
 
 from workout import *
 from smsuser import *
