@@ -9,11 +9,13 @@ except ImportError as e:
 import sys
 import twilio.twiml
 import random
+import sendgrid
 
 from workout import *
 from smsuser import *
 from strings import *
 from timezone import *
+from send_email import *
 
 from parse_rest.connection import register
 from parse_rest.datatypes import Object, ACL, Pointer
@@ -64,7 +66,7 @@ def sms():
             u = new_user
 
             # Welcome reply message
-            reply = 'Hi ' + message + '! Welcome to Bowery SMS. Text any of the commands below to get started.\n\n'
+            reply = 'Hi ' + message + ', welcome to Bowery SMS! Text any of the commands below to get started.\n\n'
             reply += list_of_commands()
         else:
             # Lowercase the inbound message
@@ -79,7 +81,7 @@ def sms():
                 if u.subscriber is False:
                     u.subscriber = True
                     u.save()
-                    reply = 'You are now subscribed. Reply "Stop" to stop receiving updates.'
+                    reply = 'You are now subscribed. Reply "Stop" to stop receiving the day\'s workout every morning.'
                 else:
                     # They already exist
                     reply = 'You already subscribed!'
@@ -95,6 +97,16 @@ def sms():
             # Get a list of commands
             elif message == 'help':
                 reply = 'Commands:\n' + list_of_commands()
+
+            # Tips for improving the SMS app
+            elif message[0:4] == 'tip:':
+
+                # Send email with user's tip
+                email_subject = 'Tip!'
+                email_body = message[4:].strip() + '\n\n' + '-' + u.name + ', ' + u.phone
+                send_email(email_subject, email_body)
+
+                reply = "Thanks for the feedback! I will give it a look."
 
             # Log today's workout
             elif message[0] == '+':
@@ -135,9 +147,9 @@ def sms():
                         reply = 'Whoops, can\'t find any results for "' + query + '".'
 
             # Log a particular movement
-            elif len(message.split(":")) > 1:
-                activity = message.split(":")[0].strip()
-                result = message.split(":")[1].strip()
+            elif len(message.split(":",1)) > 1:
+                activity = message.split(":",1)[0].strip()
+                result = message.split(":",1)[1].strip()
 
                 # Todo: Check to see if their is an existing result for the activity
                 pr_log = PRLog(activity=activity, result=result, ACL=ACL({}))
@@ -155,6 +167,11 @@ def sms():
                     reply = 'You haven\'t subscribed.'
             else:
                 reply = "Say what? Text 'Help' for a list of commands."
+
+                # Send email if the user tries an unknown command
+                email_subject = 'Unknown command'
+                email_body = message + '\n\n' + '-' + u.name + ', ' + u.phone
+                send_email(email_subject, email_body)
 
         # Log SMS exchange
         print 'From:', phone
