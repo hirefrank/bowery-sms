@@ -15,9 +15,8 @@ TWILIO = {
     'NUMBER': os.environ.get('TWILIO_NUMBER', None),
 }
 
-SENDGRID = {
-    'USERNAME': os.environ.get('SENDGRID_USERNAME', None),
-    'PASSWORD': os.environ.get('SENDGRID_PASSWORD', None),
+MAILGUN = {
+    'API_KEY': os.environ.get('MAILGUN_API_KEY', None),
 }
 
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', None)

@@ -15,7 +15,7 @@ from workout import *
 from smsuser import *
 from strings import *
 from timezone import *
-#from email_admin import *
+from email import *
 
 from parse_rest.connection import register
 from parse_rest.datatypes import Object, ACL, Pointer
@@ -107,7 +107,7 @@ def sms():
                 # Send email with user's tip
                 email_subject = 'Tip!'
                 email_body = message[4:].strip() + '\n\n' + '-' + u.name + ', ' + u.phone
-                email_admin(email_subject, email_body)
+                simple_email(email_subject, email_body)
 
                 reply = "Thanks for the feedback! I will give it a look."
 
@@ -174,7 +174,7 @@ def sms():
                 # Send email if the user tries an unknown command
                 email_subject = 'Unknown command'
                 email_body = message + '\n\n' + '-' + u.name + ', ' + u.phone
-                email_admin(email_subject, email_body)
+                simple_email(email_subject, email_body)
 
         # Log SMS exchange
         print 'From:', phone
