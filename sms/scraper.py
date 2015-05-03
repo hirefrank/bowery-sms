@@ -14,82 +14,12 @@ import bs4
 import re
 import unicodedata
 
+from workout import *
+from strings import *
 from HTMLParser import HTMLParser
 
 from parse_rest.connection import register
 from parse_rest.datatypes import Object, ACL
-
-# Common abbreviations to help reduce the text message length.
-abbreviations = {
-    'minutes': 'min',
-    'seconds': 'sec',
-    'meters': 'm',
-    'Chest-to-Bar': 'CTB',
-    'Chest to Bar': 'CTB',
-    'Pull-Ups': 'PU',
-    'Pull Ups': 'PU',
-    'as many rounds and reps as possible': 'AMRAP',
-    'as many rounds as possible': 'AMRAP',
-    'as many reps as possible': 'AMRAP',
-    'back squat': 'BS',
-    'hang squat clean': 'HSC',
-    'hang clean': 'HC',
-    'clean and jerk': 'C&J',
-    'every minute on the minute': 'EMOM',
-    'front squat': 'FS',
-    'hand stand push up': 'HSPU',
-    'knees to elbow': 'KTE',
-    'muscle ups': 'MU',
-    'overhead squat': 'OHS',
-    'power clean': 'PC',
-    'push press': 'PP',
-    'push-press': 'PP',
-    'push jerk': 'PJ',
-    'power snatch': 'PSN',
-    'squat clean': 'SC',
-    'sumo deadlift high pull': 'SDHP',
-    'toes to bar': 'TTB',
-    'push-ups': 'PU',
-    'snatch': 'SN',
-    'squat': 'SQ',
-    'kettlebell': 'KB',
-    'clean': 'CLN',
-    'deadlift': 'DL',
-    ' one': ' 1',
-    ' two': ' 2',
-    ' three': ' 3',
-    ' four': ' 4',
-    ' five': ' 5',
-    'rounds for time of': 'RFT',
-    'rounds for time': 'RFT',
-    'alternating': 'alt',
-    'sit-ups': 'SU',
-    'Sit-Ups': 'SU',
-    'Double-Unders': 'DU',
-    }
-
-# This is ugly. I should do this better.
-# Todo: Actually learn about encoding.
-special_chars = {
-    '’': "'",
-    '‘': "'",
-    '“': '"',
-    '”': '"',
-    '…': '...',
-    '\xc2\xa0' : ' ',
-    }
-
-# Possible headers
-headers = {
-    'Open Workout:': 'Experienced Workout:',
-    'Experienced Level:': 'Open Level:',
-    'Experienced/Open': None,
-    'Workout:': None,
-    #':': None, # catchall sort of hacky
-    }
-
-class Workout(Object):
-    pass
 
 class MLStripper(HTMLParser):
     def __init__(self):
@@ -109,13 +39,13 @@ def get_programming_urls():
     response = requests.get(URL)
     soup = bs4.BeautifulSoup(response.text)
 
-    # reverse to get the most recent urls first
+    # Reverse to get the most recent urls first
     urls = list(reversed([url.text for url in soup.findAll("loc")]))
 
-    # limit to last 5 urls
+    # Limit to last 5 urls
     del urls[5:]
 
-    # reverse on return to process in asc order
+    # Reverse on return to process in asc order
     return reversed(urls)
 
 def has_wod(content):
@@ -125,12 +55,12 @@ def has_wod(content):
         return False
 
 def clean_content(content):
-    # loop through each possible header
+    # Loop through each possible header
     match = False
     for key in headers:
         if key in content:
             match = True
-            # if testing week
+            # If testing week
             if 'Testing week!' in content:
                 clean = re.sub('Testing week!.*?' + key,'', strip_tags(content.replace("</p>", "</p> ")), flags=re.DOTALL)
             else:
@@ -164,7 +94,7 @@ def save_workout(slug, raw, condensed):
     print 'Raw: ', raw
     print 'Condensed: ', condensed
 
-    # split the workout for open and experiencd tracks
+    # Split the workout for open and experiencd tracks
     for key in headers:
         if headers[key] is not None and headers[key] in condensed:
             workouts = condensed.split(headers[key])
@@ -175,13 +105,13 @@ def save_workout(slug, raw, condensed):
             workout[other_dict_key] = workouts[0].replace(key + " \n", "")
             break
 
-        # not split workouts
+        # Not split workouts
         elif key in condensed:
             workout['open'] = condensed.replace(key, "")
             workout['experienced'] = condensed.replace(key, "")
             break
 
-    # if split, set variables
+    # If split, set variables
     if len(workout) == 2:
         open_workout = workout['open']
         experienced_workout = workout['experienced']
