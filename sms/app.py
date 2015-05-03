@@ -18,7 +18,9 @@ from timezone import *
 #from email_admin import *
 
 from parse_rest.connection import register
-from parse_rest.datatypes import Object, ACL, Pointer
+from parse_rest.datatypes import Object
+from parse_rest.datatypes import ACL
+from parse_rest.datatypes import Pointer
 register(PARSE['APPLICATION_ID'], PARSE['REST_API_KEY'], master_key=PARSE['MASTER_KEY'])
 
 from flask import Flask, request, redirect
