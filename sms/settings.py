@@ -14,3 +14,10 @@ TWILIO = {
     'TOKEN': os.environ.get('TWILIO_TOKEN', None),
     'NUMBER': os.environ.get('TWILIO_NUMBER', None),
 }
+
+SENDGRID = {
+    'USERNAME': os.environ.get('SENDGRID_USERNAME', None),
+    'PASSWORD': os.environ.get('SENDGRID_PASSWORD', None),
+}
+
+ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', None)

@@ -18,7 +18,7 @@ if __name__ == '__main__':
     register(PARSE['APPLICATION_ID'], PARSE['REST_API_KEY'], master_key=PARSE['MASTER_KEY'])
     client = TwilioRestClient(TWILIO['ACCOUNT'], TWILIO['TOKEN'])
 
-    if day_of_the_week == "Sunday":
+    if day_of_the_week != "Sunday":
         next = next_workout_obj()
         if next is not None:
             body = format_workout(next)

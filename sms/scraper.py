@@ -13,6 +13,7 @@ import requests
 import bs4
 import re
 import unicodedata
+import sendgrid
 
 from workout import *
 from strings import *
@@ -123,7 +124,20 @@ def save_workout(slug, raw, condensed):
     print 'Experienced: ', experienced_workout
 
     workout = Workout(slug=slug, raw=raw, open=open_workout, experienced=experienced_workout, sent=False, ACL=ACL({}))
-    return workout.save()
+    workout.save()
+
+    # Send email to admin when new workout is added
+    send_email_log(slug, open_workout, experienced_workout)
+    return True
+
+def send_email_log(slug, open_workout, experienced_workout):
+    sg = sendgrid.SendGridClient(SENDGRID['USERNAME'], SENDGRID['PASSWORD'])
+    message = sendgrid.Mail()
+    message.add_to(ADMIN_EMAIL)
+    message.set_subject('Just added: ' + slug)
+    message.set_text('Open:\n' + open_workout + '\n\n' + 'Experienced:\n' + experienced_workout)
+    message.set_from('Bowery SMS')
+    status, msg = sg.send(message)
 
 if __name__ == '__main__':
     register(PARSE['APPLICATION_ID'], PARSE['REST_API_KEY'], master_key=PARSE['MASTER_KEY'])
