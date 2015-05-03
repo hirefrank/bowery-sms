@@ -8,7 +8,7 @@ except ImportError as e:
 
 import sendgrid
 
-def send_admin_email(subject, body):
+def email_admin(subject, body):
     sg = sendgrid.SendGridClient(SENDGRID['USERNAME'], SENDGRID['PASSWORD'])
     message = sendgrid.Mail()
     message.add_to(ADMIN_EMAIL)

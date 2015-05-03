@@ -16,7 +16,7 @@ import unicodedata
 
 from workout import *
 from strings import *
-from send_admin_email import *
+from email_admin import *
 
 from HTMLParser import HTMLParser
 
@@ -130,7 +130,7 @@ def save_workout(slug, raw, condensed):
     # Send email to admin when new workout is added
     email_subject = 'Just added: ' + slug
     email_body = 'Open:\n' + open_workout + '\n\n' + 'Experienced:\n' + experienced_workout
-    send_admin_email(email_subject, email_body)
+    email_admin(email_subject, email_body)
 
     return True
 
