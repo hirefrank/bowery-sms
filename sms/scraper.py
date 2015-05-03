@@ -21,7 +21,7 @@ from email_admin import *
 from HTMLParser import HTMLParser
 
 from parse_rest.connection import register
-from parse_rest.datatypes import Object, ACL
+from parse_rest.datatypes import *
 
 class MLStripper(HTMLParser):
     def __init__(self):
