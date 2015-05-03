@@ -15,7 +15,7 @@ from workout import *
 from smsuser import *
 from strings import *
 from timezone import *
-from send_admin_email import *
+#from send_admin_email import *
 
 from parse_rest.connection import register
 from parse_rest.datatypes import Object, ACL, Pointer
@@ -61,6 +61,9 @@ def sms():
         # Does user exist?
         user_exist = SMSUser.Query.all().filter(phone=phone).limit(1)
         if user_exist.count() == 0:
+
+            # Check for reserved list of words
+
             new_user = SMSUser(name=message, phone=phone, admin=False, subscriber=False, ACL=ACL({}))
             new_user.save()
             u = new_user
