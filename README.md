@@ -1,8 +1,7 @@
 ## Bowery SMS
 The SMS companion app for [Bowery CrossFit](http://www.bowerycrossfit.com). Receive daily workouts, log your results and never forget another PR again for FREE.
 
-##### Get started:
-Text your name to 972-4BOWERY (972-426-9379) to get started.
+**Text your name to 972-4BOWERY (972-426-9379) to get started.**
 
 ##### Features:
 - Receive the daily workout every morning as a text message.
