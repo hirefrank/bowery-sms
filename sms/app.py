@@ -117,13 +117,29 @@ def sms():
 
             # Search for a movement
             elif message[0] == '?':
-                reply = 'Search not yet implemented.'
+                # Get query from message
+                query = message[1:].strip()
+
+                # Search over user's PRs
+                search_results = PRLog.Query.all().filter(SMSUser=u).order_by("-updatedAt")
+                if search_results.count() > 0:
+                    reply = ""
+                    for item in search_results:
+                        print item.activity
+                        if query in item.activity:
+                            reply += '* ' + item.activity + ': ' + item.result + item.updatedAt.strftime(" (%m/%d/%y)") + '\n\n'
+
+                    if reply != "":
+                        reply = 'Results for "' + query + '":\n' + reply
+                    else:
+                        reply = 'Whoops, can\'t find any results for "' + query + '".'
 
             # Log a particular movement
             elif len(message.split(":")) > 1:
-                activity = message.split(":")[0]
-                result = message.split(":")[1]
+                activity = message.split(":")[0].strip()
+                result = message.split(":")[1].strip()
 
+                # Todo: Check to see if their is an existing result for the activity
                 pr_log = PRLog(activity=activity, result=result, ACL=ACL({}))
                 pr_log.SMSUser = Pointer(u)
                 pr_log.save()

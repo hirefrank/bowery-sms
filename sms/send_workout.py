@@ -25,8 +25,9 @@ if __name__ == '__main__':
 
             # Get all users that subscribe
             users = SMSUser.Query.all().filter(subscriber=True)
-            for user in users:
-                message = client.messages.create(to=user.phone, from_=TWILIO['NUMBER'], body=body)
+            if users.count() > 0:
+                for user in users:
+                    message = client.messages.create(to=user.phone, from_=TWILIO['NUMBER'], body=body)
 
             # Set the workout to sent
             next.sent = True
