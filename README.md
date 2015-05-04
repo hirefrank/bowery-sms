@@ -1,5 +1,5 @@
 ## Bowery SMS
-The SMS companion app for [Bowery CrossFit](http://www.bowerycrossfit.com). Receive daily workouts, log your results and never forget another PR again.
+The SMS companion app for [Bowery CrossFit](http://www.bowerycrossfit.com) in NYC. Receive daily workouts, log your results and never forget another PR again.
 
 **Text your name to 972-4BOWERY (972-426-9379) to get started.**
 
