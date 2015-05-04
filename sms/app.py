@@ -186,7 +186,8 @@ def sms():
         print 'Response:', reply
 
         sms_log = SMSLog(message=message, response=reply, ACL=ACL({}))
-        sms_log.SMSUser = Pointer(u)
+        if u:
+            sms_log.SMSUser = Pointer(u)
         sms_log.save()
 
         # Create response object to send back
