@@ -9,10 +9,11 @@ except ImportError as e:
 import sys
 import twilio.twiml
 import random
+import collections
 
 from workout import *
 from smsuser import *
-from strings import *
+from constants import *
 from timezone import *
 from email import *
 
@@ -37,8 +38,9 @@ class SMSLog(Object):
 
 def list_of_commands():
     content = ''
-    for key in COMMANDS:
-        content += key + '\n # ' + COMMANDS[key] + '\n\n'
+    od = collections.OrderedDict(sorted(COMMANDS.items()))
+    for key, value in od.iteritems():
+        content += value[0] + '\n # ' + value[1] + '\n\n'
     return content
 
 @app.route('/')
@@ -62,14 +64,17 @@ def sms():
         if user_exist.count() == 0:
 
             # Check for reserved list of words
+            if message.lower() == RESERVED_WORDS:
+                reply = 'Easy there, first text your name.'
 
-            new_user = SMSUser(name=message, phone=phone, admin=False, subscriber=False, ACL=ACL({}))
-            new_user.save()
-            u = new_user
+            else:
+                new_user = SMSUser(name=message, phone=phone, admin=False, subscriber=False, ACL=ACL({}))
+                new_user.save()
+                u = new_user
 
-            # Welcome reply message
-            reply = 'Hi ' + message + ', welcome to Bowery SMS! Text any of the commands below to get started.\n\n'
-            reply += list_of_commands()
+                # Welcome reply message
+                reply = 'Hi ' + message + ', welcome to Bowery SMS! Text any of the commands below to get started.\n\n'
+                reply += list_of_commands()
         else:
             # Lowercase the inbound message
             message = message.lower()

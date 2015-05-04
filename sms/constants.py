@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Common abbreviations to help reduce the text message length.
+# Todo: Should probably move these to collections to preserve ordering
 ABBREVIATIONS = {
     'minutes': 'min',
     'seconds': 'sec',
@@ -62,6 +63,7 @@ SPECIAL_CHARS = {
     }
 
 # Possible headers
+# Todo: Should probably move these to collections to preserve ordering
 HEADERS = {
     'Open Workout:': 'Experienced Workout:',
     'Experienced Level:': 'Open Level:',
@@ -78,12 +80,18 @@ SALUTATIONS = [
 
 # List of available commands
 COMMANDS = {
-    'Subscribe': 'Receive the daily workout every morning.',
-    'Stop': 'Stop receiving the daily workout every morning.',
-    'WOD': 'Get today\'s workout.',
-    '+ [result]': 'Log your result from today\'s workout. e.g. "+ 4 rounds"',
-    '[activity]: [result]': 'Log a PR for a movement or activity. e.g. "Clean 1RM: 135lbs"',
-    '? [activity]': 'Search your PRs for an activity or movement. e.g. "Clean 1RM"',
-    'Tip: [your feedback]': 'Send feedback on how to make the app better.',
+    '1': ['Subscribe','Receive the daily workout every morning.'],
+    '2': ['Stop','Stop receiving the daily workout every morning.'],
+    '3': ['WOD','Get today\'s workout.'],
+    '4': ['+ [result]','Log your result from today\'s workout. e.g. "+ 4 rounds"'],
+    '5': ['[activity]: [result]','Log a PR for a movement or activity. e.g. "Clean 1RM: 135lbs"'],
+    '6': ['? [activity]','Search your PRs for an activity or movement. e.g. "Clean 1RM"'],
+    '7': ['Tip: [your feedback]','Send feedback on how to make the app better.'],
     }
 
+# List of reserved words
+RESERVED_WORDS = [
+    'subscribe',
+    'stop',
+    'wod',
+    ]

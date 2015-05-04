@@ -15,7 +15,7 @@ import re
 import unicodedata
 
 from workout import *
-from strings import *
+from constants import *
 from email import *
 
 from HTMLParser import HTMLParser
