@@ -69,12 +69,12 @@ def sms():
                 u = None
 
             else:
-                new_user = SMSUser(name=message, phone=phone, admin=False, subscriber=False, ACL=ACL({}))
+                new_user = SMSUser(name=message, phone=phone, admin=False, subscriber=True, ACL=ACL({}))
                 new_user.save()
                 u = new_user
 
                 # Welcome reply message
-                reply = 'Hi ' + message + ', welcome to Bowery SMS! Text "Subscribe" to receive daily workouts or "Help" for a list of commands.\n\n'
+                reply = 'Hi ' + message + ', welcome to Bowery SMS! We\'ll send you the workout every morning. Text "Help" for a list of other stuff you can do.\n\n'
         else:
             # Lowercase the inbound message
             message = message.lower()
@@ -115,7 +115,7 @@ def sms():
                 email_body = message[4:].strip() + '\n\n' + '-' + u.name + ', ' + u.phone
                 simple_email(email_subject, email_body)
 
-                reply = "Thanks for the feedback! I will give it a look."
+                reply = 'Thanks for the feedback! We\'ll look into it.'
 
             # Log today's workout
             elif message[0] == '+':
