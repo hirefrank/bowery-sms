@@ -73,9 +73,9 @@ HEADERS = {
 
 # List of positive reinforcement salutations
 SALUTATIONS = [
-    'Nice work! \xF0\x9F\x92\xAA',
-    'Boom! \xF0\x9F\x92\xAA',
-    'Not too shabby! \xF0\x9F\x92\xAA'
+    'Nice work!',
+    'Boom!',
+    'Not too shabby!'
     ]
 
 # List of available commands
