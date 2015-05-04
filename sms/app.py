@@ -66,6 +66,7 @@ def sms():
             # Check for reserved list of words
             if message.lower() in RESERVED_WORDS:
                 reply = 'Easy there, first text your name.'
+                u = None
 
             else:
                 new_user = SMSUser(name=message, phone=phone, admin=False, subscriber=False, ACL=ACL({}))
@@ -186,7 +187,7 @@ def sms():
         print 'Response:', reply
 
         sms_log = SMSLog(message=message, response=reply, ACL=ACL({}))
-        if u:
+        if u is not None:
             sms_log.SMSUser = Pointer(u)
         sms_log.save()
 
