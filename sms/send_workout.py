@@ -21,7 +21,7 @@ if __name__ == '__main__':
     if day_of_the_week != "Sunday":
         next = next_workout_obj()
         if next is not None:
-            body = format_workout(next)
+            body = 'Today\'s workout:\n' + format_workout(next)
 
             # Get all users that subscribe
             users = SMSUser.Query.all().filter(subscriber=True)

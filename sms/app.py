@@ -100,7 +100,7 @@ def sms():
                 if day_of_the_week == "Sunday":
                     reply = "Open gym!"
                 else:
-                    reply = latest_workout()
+                    reply = 'Today\'s workout:\n' + latest_workout()
 
             # Get a list of commands
             elif message == 'help':
