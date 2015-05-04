@@ -74,7 +74,7 @@ def sms():
                 u = new_user
 
                 # Welcome reply message
-                reply = 'Hi ' + message + ', welcome to Bowery SMS! We\'ll send you the workout every morning. Text "Help" for a list of other stuff you can do.\n\n'
+                reply = 'Hi ' + message + ', welcome to Bowery SMS! We\'ll send you the workout every morning.\n\nText "Help" for a list of other stuff you can do.'
         else:
             # Lowercase the inbound message
             message = message.lower()
