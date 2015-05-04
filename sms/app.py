@@ -15,7 +15,7 @@ from workout import *
 from smsuser import *
 from constants import *
 from timezone import *
-from email import *
+from emailer import *
 
 from parse_rest.connection import register
 from parse_rest.datatypes import Object, ACL, Pointer
