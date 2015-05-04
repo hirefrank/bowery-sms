@@ -86,7 +86,7 @@ COMMANDS = {
     '4': ['+ [result]','Log your result from today\'s workout. e.g. "+ 4 rounds"'],
     '5': ['[activity]: [result]','Log a PR for a movement or activity. e.g. "Clean 1RM: 135lbs"'],
     '6': ['? [activity]','Search your PRs for an activity or movement. e.g. "Clean 1RM"'],
-    '7': ['Tip: [your feedback]','Send feedback on how to make the app better.'],
+    '7': ['Tip: [your feedback]','Give feedback on how to make the app better.'],
     }
 
 # List of reserved words
