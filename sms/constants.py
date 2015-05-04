@@ -81,7 +81,7 @@ SALUTATIONS = [
 # List of available commands
 COMMANDS = {
     '1': ['Subscribe','Receive the daily workout every morning.'],
-    '2': ['Stop','Stop receiving the daily workout every morning.'],
+    '2': ['Stop','Quit receiving the daily workout every morning.'],
     '3': ['WOD','Get today\'s workout.'],
     '4': ['+ [result]','Log your result from today\'s workout. e.g. "+ 4 rounds"'],
     '5': ['[activity]: [result]','Log a PR for a movement or activity. e.g. "Clean 1RM: 135lbs"'],

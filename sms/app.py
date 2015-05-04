@@ -89,7 +89,7 @@ def sms():
                 if u.subscriber is False:
                     u.subscriber = True
                     u.save()
-                    reply = 'You are now subscribed. Reply "Stop" to stop receiving the day\'s workout every morning.'
+                    reply = 'You are now subscribed. Reply "Stop" to quit receiving the daily workout every morning.'
                 else:
                     # They already exist
                     reply = 'You already subscribed!'
