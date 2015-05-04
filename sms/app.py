@@ -94,7 +94,6 @@ def sms():
                     reply = 'You already subscribed!'
 
             # Get today's wod
-            # Todo: Should return "open gym" for Sundays
             elif message == 'wod':
                 if day_of_the_week == "Sunday":
                     reply = "Open gym!"
@@ -166,7 +165,7 @@ def sms():
                 activity = message.split(":",1)[0].strip()
                 result = message.split(":",1)[1].strip()
 
-                # Todo: Check to see if their is an existing result for the activity
+                # Check to see if their is an existing result for the activity
                 pr_log = PRLog(activity=activity, result=result, ACL=ACL({}))
                 pr_log.SMSUser = Pointer(u)
                 pr_log.save()
