@@ -64,7 +64,7 @@ def sms():
         if user_exist.count() == 0:
 
             # Check for reserved list of words
-            if message.lower() == RESERVED_WORDS:
+            if message.lower() in RESERVED_WORDS:
                 reply = 'Easy there, first text your name.'
 
             else:
