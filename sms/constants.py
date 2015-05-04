@@ -72,6 +72,7 @@ HEADERS = {
     }
 
 # List of positive reinforcement salutations
+# Todo: Add support for emoji, http://apps.timwhitlock.info/emoji/tables/unicode
 SALUTATIONS = [
     'Nice work!',
     'Boom!',
