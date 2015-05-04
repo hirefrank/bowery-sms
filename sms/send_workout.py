@@ -23,6 +23,9 @@ if __name__ == '__main__':
         if next is not None:
             body = 'Today\'s workout:\n' + format_workout(next)
 
+            # Todo: make suggestion contextual
+            body += '\n\nReply with "+ [result]" to log your result. e.g. "+ 4 rounds"'
+
             # Get all users that subscribe
             users = SMSUser.Query.all().filter(subscriber=True)
             if users.count() > 0:

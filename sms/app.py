@@ -100,6 +100,8 @@ def sms():
                     reply = "Open gym!"
                 else:
                     reply = 'Today\'s workout:\n' + latest_workout()
+
+                    # Todo: make suggestion contextual
                     reply += '\n\nReply with "+ [result]" to log your result. e.g. "+ 4 rounds"'
 
             # Get a list of commands
@@ -137,6 +139,7 @@ def sms():
                     workout_log.save()
                     reply = random.choice(SALUTATIONS) + " We've updated your workout result to " + result + "."
 
+                # Todo: make suggestion contextual
                 reply += '\n\nHit a PR? Reply with "[movement]: [result]". e.g. "Clean 1RM: 135lbs"'
 
             # Search for a movement
