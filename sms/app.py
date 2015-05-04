@@ -131,8 +131,10 @@ def sms():
                     reply = random.choice(SALUTATIONS) + " We've recorded " + result + " for today's workout."
 
                 else:
-                    workout_log_exist.result = result
-                    workout_log_exist.save()
+                    workout_object = list(workout_log_exist)
+                    workout_log = workout_object[0]
+                    workout_log.result = result
+                    workout_log.save()
                     reply = random.choice(SALUTATIONS) + " We've updated your workout result to " + result + "."
 
             # Search for a movement
