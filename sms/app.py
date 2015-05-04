@@ -74,8 +74,7 @@ def sms():
                 u = new_user
 
                 # Welcome reply message
-                reply = 'Hi ' + message + ', welcome to Bowery SMS! Text any of the commands below to get started.\n\n'
-                reply += list_of_commands()
+                reply = 'Hi ' + message + ', welcome to Bowery SMS! Text "Subscribe" to receive daily workouts or "Help" for a list of commands.\n\n'
         else:
             # Lowercase the inbound message
             message = message.lower()
@@ -89,7 +88,7 @@ def sms():
                 if u.subscriber is False:
                     u.subscriber = True
                     u.save()
-                    reply = 'You are now subscribed. Reply "Stop" to quit receiving the daily workout every morning.'
+                    reply = 'You are now subscribed. Reply "Stop" to quit receiving the workout every morning.'
                 else:
                     # They already exist
                     reply = 'You already subscribed!'
@@ -101,6 +100,7 @@ def sms():
                     reply = "Open gym!"
                 else:
                     reply = 'Today\'s workout:\n' + latest_workout()
+                    reply += '\n\nReply with "+ [result]" to log your result. e.g. "+ 4 rounds"'
 
             # Get a list of commands
             elif message == 'help':
@@ -136,6 +136,8 @@ def sms():
                     workout_log.result = result
                     workout_log.save()
                     reply = random.choice(SALUTATIONS) + " We've updated your workout result to " + result + "."
+
+                reply += '\n\nHit a PR? Reply with "[movement]: [result]". e.g. "Clean 1RM: 135lbs"'
 
             # Search for a movement
             elif message[0] == '?':
