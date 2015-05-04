@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Common abbreviations to help reduce the text message length.
-abbreviations = {
+ABBREVIATIONS = {
     'minutes': 'min',
     'seconds': 'sec',
     'meters': 'm',
@@ -52,7 +52,7 @@ abbreviations = {
 
 # This is ugly. I should do this better.
 # Todo: Actually learn about encoding.
-special_chars = {
+SPECIAL_CHARS = {
     '’': "'",
     '‘': "'",
     '“': '"',
@@ -62,7 +62,7 @@ special_chars = {
     }
 
 # Possible headers
-headers = {
+HEADERS = {
     'Open Workout:': 'Experienced Workout:',
     'Experienced Level:': 'Open Level:',
     'Experienced/Open': None,
@@ -70,14 +70,14 @@ headers = {
     }
 
 # List of positive reinforcement salutations
-salutations = [
+SALUTATIONS = [
     'Nice work!',
     'Boom!',
     'Not too shabby!'
     ]
 
 # List of available commands
-commands = {
+COMMANDS = {
     'Subscribe': 'Receive the daily workout every morning.',
     'Stop': 'Stop receiving the daily workout every morning.',
     'WOD': 'Get today\'s workout.',

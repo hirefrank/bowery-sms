@@ -59,7 +59,7 @@ def has_wod(content):
 def clean_content(content):
     # Loop through each possible header
     match = False
-    for key in headers:
+    for key in HEADERS:
         if key in content:
             match = True
             # If testing week
@@ -75,17 +75,17 @@ def clean_content(content):
     return clean
 
 def condensed_content(content):
-    for key in special_chars:
-        content = content.replace(key, special_chars[key])
+    for key in SPECIAL_CHARS:
+        content = content.replace(key, SPECIAL_CHARS[key])
 
     content = content.replace('\n \n','')
     content = content.replace('\n ','')
     content = re.sub(' +',' ', content)
     content = content.replace(' :', ':')
 
-    for key in abbreviations:
-        content = content.replace(key, abbreviations[key])
-        content = content.replace(key.capitalize(), abbreviations[key])
+    for key in ABBREVIATIONS:
+        content = content.replace(key, ABBREVIATIONS[key])
+        content = content.replace(key.capitalize(), ABBREVIATIONS[key])
 
     return content.strip()
 
@@ -97,13 +97,13 @@ def save_workout(slug, raw, condensed):
     print 'Condensed: ', condensed
 
     # Split the workout for open and experiencd tracks
-    for key in headers:
-        if headers[key] is not None and headers[key] in condensed:
-            workouts = condensed.split(headers[key])
-            dict_key = headers[key].split(" ")[0].lower()
+    for key in HEADERS:
+        if HEADERS[key] is not None and HEADERS[key] in condensed:
+            workouts = condensed.split(HEADERS[key])
+            dict_key = HEADERS[key].split(" ")[0].lower()
             other_dict_key = 'experienced' if dict_key == 'open' else 'open'
 
-            workout[dict_key] = workouts[1].replace(headers[key] + "\n", "")
+            workout[dict_key] = workouts[1].replace(HEADERS[key] + "\n", "")
             workout[other_dict_key] = workouts[0].replace(key + " \n", "")
             break
 

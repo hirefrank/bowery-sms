@@ -37,8 +37,8 @@ class SMSLog(Object):
 
 def list_of_commands():
     content = ''
-    for key in commands:
-        content += key + '\n # ' + commands[key] + '\n\n'
+    for key in COMMANDS:
+        content += key + '\n # ' + COMMANDS[key] + '\n\n'
     return content
 
 @app.route('/')
@@ -122,12 +122,12 @@ def sms():
                     workout_log.SMSUser = Pointer(u)
                     workout_log.Workout = Pointer(w)
                     workout_log.save()
-                    reply = random.choice(salutations) + " We've recorded " + result + " for today's workout."
+                    reply = random.choice(SALUTATIONS) + " We've recorded " + result + " for today's workout."
 
                 else:
                     workout_log.result = result
                     workout_log.save()
-                    reply = random.choice(salutations) + " We've updated your workout result to " + result + "."
+                    reply = random.choice(SALUTATIONS) + " We've updated your workout result to " + result + "."
 
             # Search for a movement
             elif message[0] == '?':
@@ -157,7 +157,7 @@ def sms():
                 pr_log = PRLog(activity=activity, result=result, ACL=ACL({}))
                 pr_log.SMSUser = Pointer(u)
                 pr_log.save()
-                reply = random.choice(salutations) + " We've recorded " + result + " for " + activity + "."
+                reply = random.choice(SALUTATIONS) + " We've recorded " + result + " for " + activity + "."
 
             elif message == 'stop':
                 # Is the user subscribed?
