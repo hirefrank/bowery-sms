@@ -95,4 +95,5 @@ RESERVED_WORDS = [
     'subscribe',
     'stop',
     'wod',
+    'help',
     ]
