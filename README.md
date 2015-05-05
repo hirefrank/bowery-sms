@@ -8,3 +8,5 @@ The SMS companion app for [Bowery CrossFit](http://www.bowerycrossfit.com) in NY
 - Log your result from a workout. e.g. "+ 4 rounds"
 - Log a PR for a movement or activity. e.g. "Clean 1RM: 135lbs"
 - Search your PRs for a movement or activity. e.g. "? Clean 1RM"
+
+This is a Python [Flask](http://flask.pocoo.org/) app powered by [Twilio](https://www.twilio.com/), running on [Heroku](https://www.heroku.com) and using [Parse](https://www.parse.com/) as the datastore.
