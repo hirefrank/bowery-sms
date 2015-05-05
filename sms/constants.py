@@ -81,12 +81,12 @@ SALUTATIONS = [
 
 # List of available commands
 COMMANDS = {
-    '1': ['Subscribe','Receive the workout every morning.'],
-    '2': ['Stop','Quit receiving the workout every morning.'],
-    '3': ['WOD','Get today\'s workout.'],
-    '4': ['+ [result]','Log your result from today\'s workout. e.g. "+ 4 rounds"'],
-    '5': ['[movement]: [result]','Log a PR for a movement or activity. e.g. "Clean 1RM: 135lbs"'],
-    '6': ['? [movement]','Search your PRs for a movement or activity. e.g. "? Clean 1RM"'],
+    '6': ['Subscribe','Renable receiving the workout every morning at 6am.'],
+    '4': ['Stop','Quit receiving the workout every morning.'],
+    '5': ['WOD','Send today\'s workout right now.'],
+    '1': ['+ [result]','Log your result from today\'s workout. e.g. "+ 4 rounds"'],
+    '2': ['[movement]: [result]','Log a PR for a movement or activity. e.g. "Clean 1RM: 135lbs"'],
+    '3': ['? [movement]','Search your PRs for a movement or activity. e.g. "? Clean 1RM"'],
     '7': ['Tip: [your feedback]','Give feedback on how to make the app better.'],
     }
 
