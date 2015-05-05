@@ -86,7 +86,7 @@ COMMANDS = {
     '3': ['WOD','Get today\'s workout.'],
     '4': ['+ [result]','Log your result from today\'s workout. e.g. "+ 4 rounds"'],
     '5': ['[movement]: [result]','Log a PR for a movement or activity. e.g. "Clean 1RM: 135lbs"'],
-    '6': ['? [movement]','Search your PRs for a movement or activity. e.g. "Clean 1RM"'],
+    '6': ['? [movement]','Search your PRs for a movement or activity. e.g. "? Clean 1RM"'],
     '7': ['Tip: [your feedback]','Give feedback on how to make the app better.'],
     }
 
