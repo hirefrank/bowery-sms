@@ -77,6 +77,11 @@ def sms():
                 new_user.save()
                 u = new_user
 
+                # Send email when a user signs up
+                email_subject = 'New user!'
+                email_body = u.name + ', ' + u.phone
+                simple_email(email_subject, email_body)
+
                 # Welcome reply message
                 # Only return first name
                 reply = 'Hi ' + message.split(" ")[0] + ', welcome to Bowery SMS! We\'ll send you the workout every morning.\n\nText "Help" for a list of other stuff you can do.'
