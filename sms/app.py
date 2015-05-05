@@ -57,10 +57,14 @@ def sms():
         message = request.form['Body'].strip()
 
         # Sender's phone number. Save for later.
-        phone = request.form['From']
+        phone = request.form['From'].strip()
 
         # Does user exist?
         user_exist = SMSUser.Query.all().filter(phone=phone).limit(1)
+
+        print 'User_exist obj:', user_exist
+        print 'User_exist count:', user_exist.count()
+
         if user_exist.count() == 0:
 
             # Check for reserved list of words
