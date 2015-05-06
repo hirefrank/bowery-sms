@@ -114,9 +114,9 @@ def sms():
                         reply = 'Today\'s workout:\n'
 
                         if latest.experienced.strip() == latest.open.strip():
-                                reply += latest.open.strip()
-                            else:
-                                reply += 'Open:\n' + latest.open.strip() + '\n\n' + 'Experienced:\n' + latest.experienced.strip()
+                            reply += latest.open.strip()
+                        else:
+                            reply += 'Open:\n' + latest.open.strip() + '\n\n' + 'Experienced:\n' + latest.experienced.strip()
 
                         # Todo: make suggestion contextual
                         reply += '\n\nReply with "+ YOUR_RESULT" to log your result. e.g. For an AMRAP workout: "+ 4 rounds"'
