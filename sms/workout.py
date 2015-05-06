@@ -16,6 +16,7 @@ class Workout(Object):
     pass
 
 def format_workout(obj):
+    print 'obj', obj
     if obj.experienced == obj.open:
         return obj.open.strip()
     else:
@@ -24,8 +25,6 @@ def format_workout(obj):
 # Returns the latest workout object
 def latest_workout_obj():
     latest = Workout.Query.all().filter(sent=True).order_by("-createdAt").limit(1)
-    print 'Latest', latest
-
     if latest.count() > 0:
         return latest[0]
     else:
