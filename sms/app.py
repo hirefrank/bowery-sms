@@ -200,14 +200,14 @@ def sms():
                 simple_email(email_subject, email_body)
 
         # Log SMS exchange
-        print 'From:', phone
-        print 'Message:', message
-        print 'Response:', reply
+        #print 'From:', phone
+        #print 'Message:', message
+        #print 'Response:', reply
 
-        sms_log = SMSLog(message=message, response=reply, ACL=ACL({}))
-        if u is not None:
-            sms_log.SMSUser = Pointer(u)
-        sms_log.save()
+        #sms_log = SMSLog(message=message, response=reply, ACL=ACL({}))
+        #if u is not None:
+        #    sms_log.SMSUser = Pointer(u)
+        #sms_log.save()
 
         # Create response object to send back
         resp = twilio.twiml.Response()
