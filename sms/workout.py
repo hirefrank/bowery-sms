@@ -23,7 +23,13 @@ def format_workout(obj):
 
 # Returns the latest workout object
 def latest_workout_obj():
-    return (Workout.Query.all().filter(sent=True).order_by("-createdAt").limit(1))[0]
+    latest = Workout.Query.all().filter(sent=True).order_by("-createdAt").limit(1)
+    print 'Latest', latest
+
+    if latest.count() > 0:
+        return latest[0]
+    else:
+        return None
 
 # Returns the latest workout
 def latest_workout():
