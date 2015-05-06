@@ -110,13 +110,7 @@ def sms():
                 else:
                     latest = latest_workout_obj()
                     if latest is not None:
-                        #reply = 'Today\'s workout:\n' + format_workout(latest)
-                        reply = 'Today\'s workout:\n'
-
-                        if latest.experienced.strip() == latest.open.strip():
-                            reply += latest.open.strip()
-                        else:
-                            reply += 'Open:\n' + latest.open.strip() + '\n\n' + 'Experienced:\n' + latest.experienced.strip()
+                        reply = 'Today\'s workout:\n' + format_workout(latest)
 
                         # Todo: make suggestion contextual
                         reply += '\n\nReply with "+ YOUR_RESULT" to log your result. e.g. For an AMRAP workout: "+ 4 rounds"'
