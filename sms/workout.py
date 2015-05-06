@@ -17,11 +17,12 @@ class Workout(Object):
 
 def format_workout(obj):
     print 'obj', obj
-    if obj.experienced == obj.open:
-        print obj.open.strip()
+    print 'Open:', obj.open.strip()
+    print 'Experienced:', obj.experienced.strip()
+
+    if obj.experienced.strip() == obj.open.strip():
         return obj.open.strip()
     else:
-        print 'Open:\n' + obj.open.strip() + '\n\n' + 'Experienced:\n' + obj.experienced.strip()
         return 'Open:\n' + obj.open.strip() + '\n\n' + 'Experienced:\n' + obj.experienced.strip()
 
 # Returns the latest workout object
