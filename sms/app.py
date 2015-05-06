@@ -108,10 +108,10 @@ def sms():
                 if day_of_the_week == "Sunday":
                     reply = "Open gym!"
                 else:
-                    reply = 'Today\'s workout:\n' + latest_workout()
+                    #reply = 'Today\'s workout:\n' + latest_workout()
 
                     # Todo: make suggestion contextual
-                    reply += '\n\nReply with "+ YOUR_RESULT" to log your result. e.g. For an AMRAP workout "+ 4 rounds"'
+                    reply = '\n\nReply with "+ YOUR_RESULT" to log your result. e.g. For an AMRAP workout: "+ 4 rounds"'
 
             # Get a list of commands
             elif message == 'help':
