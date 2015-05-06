@@ -60,6 +60,7 @@ SPECIAL_CHARS = {
     '”': '"',
     '…': '...',
     '\xc2\xa0' : ' ',
+    '–': '-',
     }
 
 # Possible headers
