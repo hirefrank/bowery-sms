@@ -110,7 +110,13 @@ def sms():
                 else:
                     latest = latest_workout_obj()
                     if latest is not None:
-                        reply = 'Today\'s workout:\n' + format_workout(latest)
+                        #reply = 'Today\'s workout:\n' + format_workout(latest)
+                        reply = 'Today\'s workout:\n'
+
+                        if latest.experienced.strip() == latest.open.strip():
+                                reply += latest.open.strip()
+                            else:
+                                reply += 'Open:\n' + latest.open.strip() + '\n\n' + 'Experienced:\n' + latest.experienced.strip()
 
                         # Todo: make suggestion contextual
                         reply += '\n\nReply with "+ YOUR_RESULT" to log your result. e.g. For an AMRAP workout: "+ 4 rounds"'
@@ -200,14 +206,14 @@ def sms():
                 simple_email(email_subject, email_body)
 
         # Log SMS exchange
-        #print 'From:', phone
-        #print 'Message:', message
-        #print 'Response:', reply
+        print 'From:', phone
+        print 'Message:', message
+        print 'Response:', reply
 
-        #sms_log = SMSLog(message=message, response=reply, ACL=ACL({}))
-        #if u is not None:
-        #    sms_log.SMSUser = Pointer(u)
-        #sms_log.save()
+        sms_log = SMSLog(message=message, response=reply, ACL=ACL({}))
+        if u is not None:
+            sms_log.SMSUser = Pointer(u)
+        sms_log.save()
 
         # Create response object to send back
         resp = twilio.twiml.Response()
