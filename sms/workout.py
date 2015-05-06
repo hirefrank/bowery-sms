@@ -33,11 +33,6 @@ def latest_workout_obj():
     else:
         return None
 
-# Returns the latest workout
-def latest_workout():
-    latest = latest_workout_obj()
-    return format_workout(latest)
-
 # Returns the next workout object
 def next_workout_obj():
     next = Workout.Query.all().filter(sent=False).order_by("-createdAt").limit(1)
