@@ -17,8 +17,8 @@ class Workout(Object):
 
 def format_workout(obj):
     print 'obj', obj
-    print 'Open:', obj.open.strip()
-    print 'Experienced:', obj.experienced.strip()
+    print 'Open:', obj.open
+    print 'Experienced:', obj.experienced
 
     if obj.experienced.strip() == obj.open.strip():
         return obj.open.strip()
