@@ -85,7 +85,7 @@ COMMANDS = {
     '6': ['Subscribe','Renable receiving the workout every morning at 6am.'],
     '5': ['Stop','Quit receiving the workout every morning.'],
     '4': ['WOD','Send today\'s workout right now.'],
-    '1': ['+ YOUR_RESULT','Log your result from today\'s workout. e.g. "+ 4 rounds"'],
+    '1': ['+ YOUR_SCORE','Log your score from today\'s workout. e.g. For an AMRAP workout: "+ 4 rounds"'],
     '2': ['MOVEMENT: YOUR_RESULT','Log a PR for a movement or activity. e.g. "Clean 1RM: 135lbs"'],
     '3': ['? MOVEMENT_SEARCH','Search your PRs for a movement or activity. e.g. "? Clean 1RM"'],
     '7': ['Tip: YOUR_FEEDBACK','Give feedback on how to make the app better.'],

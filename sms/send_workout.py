@@ -24,7 +24,7 @@ if __name__ == '__main__':
             body = 'Today\'s workout:\n' + format_workout(next)
 
             # Todo: make suggestion contextual
-            body += '\n\nReply with "+ YOUR_RESULT" to log your result. e.g. For an AMRAP workout: "+ 4 rounds"'
+            body += '\n\nReply with "+ YOUR_SCORE" to log the workout. e.g. For an AMRAP workout: "+ 4 rounds"'
 
             # Get all users that subscribe
             users = SMSUser.Query.all().filter(subscriber=True)

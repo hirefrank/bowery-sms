@@ -113,7 +113,7 @@ def sms():
                         reply = 'Today\'s workout:\n' + format_workout(latest)
 
                         # Todo: make suggestion contextual
-                        reply += '\n\nReply with "+ YOUR_RESULT" to log your result. e.g. For an AMRAP workout: "+ 4 rounds"'
+                        reply += '\n\nReply with "+ YOUR_SCORE" to log the workout. e.g. For an AMRAP workout: "+ 4 rounds"'
 
             # Get a list of commands
             elif message == 'help':
