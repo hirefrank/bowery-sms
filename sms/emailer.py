@@ -10,9 +10,9 @@ import requests
 
 def simple_email(subject, body, to=ADMIN_EMAIL):
     return requests.post(
-        "https://api.mailgun.net/v3/bowerysms.com/messages",
+        "https://api.mailgun.net/v3/" + MAILGUN['DOMAIN'] + "/messages",
         auth=("api", MAILGUN['API_KEY']),
-        data={"from": "Bowery SMS <no-reply@bowerysms.com>",
+        data={"from": MAILGUN['FROM_EMAIL'],
               "to": to,
               "subject": subject,
               "text": body})

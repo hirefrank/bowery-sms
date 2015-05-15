@@ -17,6 +17,8 @@ TWILIO = {
 
 MAILGUN = {
     'API_KEY': os.environ.get('MAILGUN_API_KEY', None),
+    'DOMAIN': os.environ.get('MAILGUN_DOMAIN', None),
+    'FROM_EMAIL': os.environ.get('MAILGUN_FROM_EMAIL', None)
 }
 
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', None)
