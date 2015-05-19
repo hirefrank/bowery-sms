@@ -145,30 +145,32 @@ if __name__ == '__main__':
         response = requests.get(post)
         text = response.text
 
-        soup = bs4.BeautifulSoup(text.replace('<div class="col-right"></p>', '<div class="col-right">'))
+        if 'content="WODs"' in text:
 
-        # Get content for each post
-        content = str(soup.select('div.col-right')).strip('[]')
+            soup = bs4.BeautifulSoup(text.replace('<div class="col-right"></p>', '<div class="col-right">'))
 
-        if content == "":
-            content = str(soup.select('div.single-post-content')).strip('[]')
+            # Get content for each post
+            content = str(soup.select('div.col-right')).strip('[]')
 
-        # If the post contains a WOD
-        if has_wod(content):
+            if content == "":
+                content = str(soup.select('div.single-post-content')).strip('[]')
 
-            # Get slug from the URL
-            slug = post.replace("http://www.bowerycrossfit.com/programming-", "").strip("/")
+            # If the post contains a WOD
+            if has_wod(content):
 
-            # Does the slug already exist?
-            slug_exist = Workout.Query.all().filter(slug=slug).limit(1)
+                # Get slug from the URL
+                slug = post.replace("http://www.bowerycrossfit.com/programming-", "").strip("/")
 
-            if slug_exist.count() == 0:
-                # If not, save the workout
-                raw = clean_content(content)
-                condensed = condensed_content(raw)
-                save_workout(slug, raw, condensed)
-            else:
-                print 'No new workouts.'
+                # Does the slug already exist?
+                slug_exist = Workout.Query.all().filter(slug=slug).limit(1)
+
+                if slug_exist.count() == 0:
+                    # If not, save the workout
+                    raw = clean_content(content)
+                    condensed = condensed_content(raw)
+                    save_workout(slug, raw, condensed)
+                else:
+                    print 'No new workouts.'
 
 
 
