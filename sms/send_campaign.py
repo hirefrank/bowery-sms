@@ -18,8 +18,8 @@ if __name__ == '__main__':
     register(PARSE['APPLICATION_ID'], PARSE['REST_API_KEY'], master_key=PARSE['MASTER_KEY'])
     client = TwilioRestClient(TWILIO['ACCOUNT'], TWILIO['TOKEN'])
 
-    body = "Whoops! Today's workout isn't an open gym. Sorry about that! \n\n"
-    body += "Yesterday, Bowery CrossFit redesigned their website, and they no longer display upcoming WODs. As a result, I will be suspending the daily messages until I figure something else out. :/"
+    body = "Okay, everything should be good now! \n\n"
+    body += "The last message I sent you is today's workout. Email me at frank@hirefrank.com if you have any questions. Take care, Frank"
 
     # Get all users that subscribe
     users = SMSUser.Query.all().filter(subscriber=True)

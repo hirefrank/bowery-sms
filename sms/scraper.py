@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Scrape the daily workouts from Bowery CrossFit blog's sitemap.
-URL = 'http://www.bowerycrossfit.com/post-sitemap.xml'
+URL = 'http://www.flipsidecf.com/sitemap.xml'
 
 try:
     from settings_local import *
@@ -44,14 +44,16 @@ def get_programming_urls():
     # Reverse to get the most recent urls first
     urls = list(reversed([url.text for url in soup.findAll("loc")]))
 
-    # Limit to last 5 urls
-    del urls[5:]
+    clean_urls = []
+    for url in urls:
+        if '/workout-of-the-day/' in url:
+            clean_urls.append(url)
 
-    # Reverse on return to process in asc order
-    return reversed(urls)
+    return clean_urls
 
 def has_wod(content):
-    if not "Open gym" in content:
+    lower_content = content.lower()
+    if not "open gym" in lower_content:
         return True
     else:
         return False
@@ -78,8 +80,8 @@ def condensed_content(content):
     for key in SPECIAL_CHARS:
         content = content.replace(key, SPECIAL_CHARS[key])
 
-    content = content.replace('\n \n','')
-    content = content.replace('\n ','')
+    content = content.replace('\n \n','\n')
+    content = content.replace('\n\n','\n')
     content = re.sub(' +',' ', content)
     content = content.replace(' :', ':')
 
@@ -145,32 +147,28 @@ if __name__ == '__main__':
         response = requests.get(post)
         text = response.text
 
-        if 'content="WODs"' in text:
+        soup = bs4.BeautifulSoup(text)
 
-            soup = bs4.BeautifulSoup(text.replace('<div class="col-right"></p>', '<div class="col-right">'))
+        # Get content for each post
+        content = str(soup.select('div.entry-content')).strip('[]')
+        content = re.sub(r"</?p>|<br>|<br/?>", "\n", content)
 
-            # Get content for each post
-            content = str(soup.select('div.col-right')).strip('[]')
+        # If the post contains a WOD
+        if has_wod(content):
 
-            if content == "":
-                content = str(soup.select('div.single-post-content')).strip('[]')
+            # Get slug from the URL
+            slug = post.replace("http://www.flipsidecf.com/workout-of-the-day/", "").strip("/")
 
-            # If the post contains a WOD
-            if has_wod(content):
+            # Does the slug already exist?
+            slug_exist = Workout.Query.all().filter(slug=slug).limit(1)
 
-                # Get slug from the URL
-                slug = post.replace("http://www.bowerycrossfit.com/programming-", "").strip("/")
-
-                # Does the slug already exist?
-                slug_exist = Workout.Query.all().filter(slug=slug).limit(1)
-
-                if slug_exist.count() == 0:
-                    # If not, save the workout
-                    raw = clean_content(content)
-                    condensed = condensed_content(raw)
-                    save_workout(slug, raw, condensed)
-                else:
-                    print 'No new workouts.'
+            if slug_exist.count() == 0:
+                # If not, save the workout
+                raw = clean_content(content)
+                condensed = condensed_content(raw)
+                save_workout(slug, raw, condensed)
+            else:
+                print 'No new workouts.'
 
 
 
