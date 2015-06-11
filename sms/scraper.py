@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # Scrape the daily workouts from Bowery CrossFit blog's sitemap.
-URL = 'http://www.flipsidecf.com/sitemap.xml'
+URL = 'http://www.flipsidecf.com'
 
 try:
     from settings_local import *
@@ -41,15 +41,12 @@ def get_programming_urls():
     response = requests.get(URL)
     soup = bs4.BeautifulSoup(response.text)
 
-    # Reverse to get the most recent urls first
-    urls = list(reversed([url.text for url in soup.findAll("loc")]))
+    urls = []
+    content = soup.select('a.u-url')
+    for item in content:
+        urls.append("{0}{1}".format(URL, item['href']))
 
-    clean_urls = []
-    for url in urls:
-        if '/workout-of-the-day/' in url:
-            clean_urls.append(url)
-
-    return clean_urls
+    return urls
 
 def has_wod(content):
     lower_content = content.lower()
