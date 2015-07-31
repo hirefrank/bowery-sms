@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 
 # Scrape the daily workouts from Bowery CrossFit blog's sitemap.
-URL = 'http://www.flipsidecf.com'
+DOMAIN = 'http://www.flipsidecf.com'
+URL = DOMAIN + '/bcf-wod'
 
 try:
     from settings_local import *
@@ -44,9 +45,9 @@ def get_programming_urls():
     urls = []
     content = soup.select('a.u-url')
     for item in content:
-        urls.append("{0}{1}".format(URL, item['href']))
+        urls.append("{0}{1}".format(DOMAIN, item['href']))
 
-    return urls
+    return reversed(urls)
 
 def has_wod(content):
     lower_content = content.lower()
@@ -154,7 +155,7 @@ if __name__ == '__main__':
         if has_wod(content):
 
             # Get slug from the URL
-            slug = post.replace("http://www.flipsidecf.com/workout-of-the-day/", "").strip("/")
+            slug = post.replace(URL, "").strip("/")
 
             # Does the slug already exist?
             slug_exist = Workout.Query.all().filter(slug=slug).limit(1)
