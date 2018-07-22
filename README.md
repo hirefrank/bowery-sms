@@ -1,3 +1,5 @@
+#### This is no longer active 
+
 ## Bowery SMS
 The SMS companion app for [Bowery CrossFit](http://www.bowerycrossfit.com) in NYC. Receive daily workouts, log your results and never forget another PR again.
 
